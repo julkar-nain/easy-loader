@@ -1,4 +1,4 @@
-package com.nain.easydownloader
+package com.nain.easyloader
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

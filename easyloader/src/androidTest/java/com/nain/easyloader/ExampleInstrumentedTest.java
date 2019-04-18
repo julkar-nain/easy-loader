@@ -1,4 +1,4 @@
-package com.nain.easydownloader;
+package com.nain.easyloader;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

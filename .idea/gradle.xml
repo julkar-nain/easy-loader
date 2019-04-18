@@ -8,7 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/easydownloader" />
+            <option value="$PROJECT_DIR$/easyloader" />
             <option value="$PROJECT_DIR$/sample" />
           </set>
         </option>

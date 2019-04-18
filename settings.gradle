@@ -1,1 +1,1 @@
-include ':sample', ':easydownloader'
+include ':sample', ':easyloader'

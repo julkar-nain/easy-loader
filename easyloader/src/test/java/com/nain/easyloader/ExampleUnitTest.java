@@ -1,4 +1,4 @@
-package com.nain.easydownloader;
+package com.nain.easyloader;
 
 import org.junit.Test;
 
