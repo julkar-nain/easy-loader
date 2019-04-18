@@ -1,5 +1,7 @@
 package com.nain.easyloader.builder
 
+import android.graphics.drawable.AdaptiveIconDrawable
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.nain.easyloader.loader.ImageLoader
 
@@ -20,6 +22,11 @@ open class ImageBuilder{
     open fun container(imageView: ImageView) : ImageBuilder{
         imageLoader.imageView = imageView;
 
+        return this;
+    }
+
+    open fun placeholder(imageResource: Int) : ImageBuilder{
+        imageLoader.placeHolder = imageResource
         return this;
     }
 
