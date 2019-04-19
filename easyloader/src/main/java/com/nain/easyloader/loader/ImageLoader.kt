@@ -3,8 +3,9 @@ package com.nain.easyloader.loader
 import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import com.nain.easyloader.cache.MemoryCache
+import com.nain.easyloader.handler.DefaultDataHandler
 import java.io.InputStream
 
 /**
@@ -16,16 +17,22 @@ open class ImageLoader : BaseLoader() {
     internal var placeHolder: Int = 0
 
     open fun show() {
-        val activity: Activity = imageView.context as Activity;
+        val activity: Activity = imageView.context as Activity
         imageView.setImageDrawable(activity.getDrawable(placeHolder))
 
-        download(object : DefaultDataHandler() {
-            override fun onSuccess(data: InputStream) {
-                super.onSuccess(data)
-                val imageData: Bitmap = BitmapFactory.decodeStream(data)
+        val bitmap: Bitmap? = MemoryCache.get(url) as Bitmap?
 
-                activity.runOnUiThread({ imageView.setImageBitmap(imageData) })
-            }
-        })
+        if (bitmap != null) {
+            activity.runOnUiThread({ imageView.setImageBitmap(bitmap) })
+        } else {
+            download(object : DefaultDataHandler() {
+                override fun onSuccess(data: InputStream) {
+                    super.onSuccess(data)
+                    val imageData: Bitmap = BitmapFactory.decodeStream(data)
+                    MemoryCache.set(url, imageData)
+                    activity.runOnUiThread({ imageView.setImageBitmap(imageData) })
+                }
+            })
+        }
     }
 }

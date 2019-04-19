@@ -1,5 +1,6 @@
 package com.nain.easyloader.loader
 
+import com.nain.easyloader.handler.DataHandler
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL

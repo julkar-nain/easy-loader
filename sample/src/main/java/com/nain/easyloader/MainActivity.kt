@@ -10,24 +10,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val sampleImageUrlForUpper = "https://images.unsplash.com/photo-1464547323744-4edd0cd0c746?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=c990dc1cd803124b9e6c43b97c844ad3"
-        val sampleImageUrlForLower = "https://images.unsplash.com/photo-1464550883968-cec281c19761?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&w=1080&fit=max&s=1881cd689e10e5dca28839e68678f432"
-
         EasyLoader
             .imageBuilder()
-            .src(sampleImageUrlForUpper)
+            .src(SAMPLE_IMAGE_1)
             .placeholder(R.drawable.placeholder)
             .container(imageViewUpper)
+            .cacheLimit(1)
             .build()
             .show()
 
         EasyLoader
             .imageBuilder()
-            .src(sampleImageUrlForLower)
+            .src(SAMPLE_IMAGE_2)
             .placeholder(R.drawable.placeholder)
             .container(imageViewLower)
+            .cacheLimit(1)
             .build()
             .show()
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EasyLoader.clearCache()
     }
 }

@@ -1,6 +1,7 @@
 package com.nain.easyloader
 
 import com.nain.easyloader.builder.ImageBuilder
+import com.nain.easyloader.cache.MemoryCache
 
 /**
  * @author julkar nain
@@ -9,5 +10,9 @@ import com.nain.easyloader.builder.ImageBuilder
 object EasyLoader {
     fun imageBuilder(): ImageBuilder {
         return ImageBuilder();
+    }
+
+    fun clearCache(){
+        MemoryCache.clear()
     }
 }
