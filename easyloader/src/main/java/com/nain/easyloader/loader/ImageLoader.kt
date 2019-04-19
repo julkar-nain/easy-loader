@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.widget.ImageView
 import com.nain.easyloader.cache.MemoryCache
 import com.nain.easyloader.handler.DefaultDataHandler
+import com.nain.easyloader.task.CancellableTask
 import java.io.InputStream
 
 /**
@@ -16,7 +17,7 @@ open class ImageLoader : BaseLoader() {
     internal lateinit var imageView: ImageView
     internal var placeHolder: Int = 0
 
-    open fun show() {
+    open fun show() : CancellableTask {
         val activity: Activity = imageView.context as Activity
         imageView.setImageDrawable(activity.getDrawable(placeHolder))
 
@@ -34,5 +35,7 @@ open class ImageLoader : BaseLoader() {
                 }
             })
         }
+
+        return this
     }
 }

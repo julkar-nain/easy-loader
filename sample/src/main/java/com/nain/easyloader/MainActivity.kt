@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.nain.easyloader.handler.DefaultDataHandler
+import com.nain.easyloader.task.CancellableTask
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             .build()
             .show()
 
-        EasyLoader
+        val cancellableTask: CancellableTask = EasyLoader
             .imageBuilder()
             .src(SAMPLE_IMAGE_2)
             .placeholder(R.drawable.placeholder)
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
             .cacheLimit(1)
             .build()
             .show()
+
+        //cancellableTask.cancelTask() can be called in any time for cancel the loading
 
         EasyLoader
             .jsonBuilder()
@@ -82,5 +85,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         EasyLoader.clearCache()
+        EasyLoader.cancelAllTasks()
     }
 }

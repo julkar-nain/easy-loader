@@ -3,6 +3,7 @@ package com.nain.easyloader.loader
 import com.nain.easyloader.cache.MemoryCache
 import com.nain.easyloader.handler.DataHandler
 import com.nain.easyloader.handler.DefaultDataHandler
+import com.nain.easyloader.task.CancellableTask
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
@@ -12,7 +13,7 @@ import java.io.InputStream
 
 open class JsonLoader : BaseLoader() {
 
-    open fun load(dataHandler: DataHandler) {
+    open fun load(dataHandler: DataHandler) : CancellableTask {
 
         val jsonData: Any? = MemoryCache.get(url)
 
@@ -44,6 +45,8 @@ open class JsonLoader : BaseLoader() {
                 }
             })
         }
+
+        return this
     }
 
     private fun sendJsonData(dataHandler: DataHandler, data: Any) {
