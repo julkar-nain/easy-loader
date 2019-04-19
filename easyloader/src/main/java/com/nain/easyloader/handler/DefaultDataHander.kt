@@ -14,7 +14,7 @@ open class DefaultDataHandler: DataHandler {
        Log.d(TAG, "onFailure()");
     }
 
-    override fun onSuccess(data: InputStream) {
+    override fun onSuccess(data: Any) {
         Log.d(TAG, "onSuccess()");
     }
 }

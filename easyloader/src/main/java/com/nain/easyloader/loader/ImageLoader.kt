@@ -26,9 +26,9 @@ open class ImageLoader : BaseLoader() {
             activity.runOnUiThread({ imageView.setImageBitmap(bitmap) })
         } else {
             download(object : DefaultDataHandler() {
-                override fun onSuccess(data: InputStream) {
+                override fun onSuccess(data: Any) {
                     super.onSuccess(data)
-                    val imageData: Bitmap = BitmapFactory.decodeStream(data)
+                    val imageData: Bitmap = BitmapFactory.decodeStream(data as InputStream)
                     MemoryCache.set(url, imageData)
                     activity.runOnUiThread({ imageView.setImageBitmap(imageData) })
                 }

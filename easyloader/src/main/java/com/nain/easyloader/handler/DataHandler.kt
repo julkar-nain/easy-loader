@@ -8,6 +8,6 @@ import java.lang.Exception
  * @since 4/18/19
  */
 interface DataHandler{
-    fun onSuccess(data: InputStream)
+    fun onSuccess(data: Any)
     fun onFailure(error: Any)
 }

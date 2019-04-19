@@ -1,27 +1,18 @@
 package com.nain.easyloader.builder
 
-import android.graphics.drawable.AdaptiveIconDrawable
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
-import com.nain.easyloader.cache.MemoryCache
 import com.nain.easyloader.loader.ImageLoader
 
 /**
  * @author julkar nain
  * @since 4/18/19
  */
-open class ImageBuilder{
+open class ImageBuilder : BaseBuilder<ImageBuilder, ImageLoader>(ImageLoader()){
 
-    private val imageLoader = ImageLoader()
-
-    open fun src(url : String) : ImageBuilder{
-        imageLoader.url = url;
-
-        return this
-    }
+    private val imageLoader : ImageLoader = baseLoader as ImageLoader
 
     open fun container(imageView: ImageView) : ImageBuilder{
-        imageLoader.imageView = imageView;
+        imageLoader.imageView = imageView
 
         return this
     }
@@ -30,15 +21,5 @@ open class ImageBuilder{
         imageLoader.placeHolder = imageResource
 
         return this
-    }
-
-    open fun cacheLimit(maxLimit : Int) : ImageBuilder{
-        MemoryCache.setMaxCacheSize(maxLimit)
-
-        return this
-    }
-
-    open fun build(): ImageLoader{
-        return imageLoader
     }
 }

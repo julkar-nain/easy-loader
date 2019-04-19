@@ -1,6 +1,7 @@
 package com.nain.easyloader
 
 import com.nain.easyloader.builder.ImageBuilder
+import com.nain.easyloader.builder.JsonBuilder
 import com.nain.easyloader.cache.MemoryCache
 
 /**
@@ -9,7 +10,11 @@ import com.nain.easyloader.cache.MemoryCache
  */
 object EasyLoader {
     fun imageBuilder(): ImageBuilder {
-        return ImageBuilder();
+        return ImageBuilder()
+    }
+
+    fun jsonBuilder(): JsonBuilder{
+        return JsonBuilder()
     }
 
     fun clearCache(){

@@ -1,10 +1,16 @@
 package com.nain.easyloader
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import com.nain.easyloader.handler.DefaultDataHandler
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = javaClass.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +34,49 @@ class MainActivity : AppCompatActivity() {
             .build()
             .show()
 
+        EasyLoader
+            .jsonBuilder()
+            .src(SAMPLE_JSON_1)
+            .cacheLimit(1)
+            .build()
+            .load(object : DefaultDataHandler() {
+                override fun onSuccess(data: Any) {
+                    super.onSuccess(data)
+                    try {
+                        val jsonArray = data as JSONArray
+                        Log.d(TAG, jsonArray.toString())
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(error: Any) {
+                    super.onFailure(error)
+                    Log.d(TAG, error.toString())
+                }
+            })
+
+        EasyLoader
+            .jsonBuilder()
+            .src(SAMPLE_JSON_2)
+            .cacheLimit(1)
+            .build()
+            .load(object : DefaultDataHandler() {
+                override fun onSuccess(data: Any) {
+                    super.onSuccess(data)
+                    try {
+                        val jsonArray = data as JSONObject
+                        Log.d(TAG, jsonArray.toString())
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(error: Any) {
+                    super.onFailure(error)
+                    Log.d(TAG, error.toString())
+                }
+            })
     }
 
     override fun onDestroy() {
