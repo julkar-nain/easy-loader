@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
             .src(SAMPLE_IMAGE_1)
             .placeholder(R.drawable.placeholder)
             .container(imageViewUpper)
-            .cacheLimit(1)
             .build()
             .show()
 
@@ -31,16 +30,31 @@ class MainActivity : AppCompatActivity() {
             .src(SAMPLE_IMAGE_2)
             .placeholder(R.drawable.placeholder)
             .container(imageViewLower)
-            .cacheLimit(1)
             .build()
             .show()
 
+        cancellableTask.cancelTask()
+
         //cancellableTask.cancelTask() can be called in any time for cancel the loading
+
+        val arrayList = ArrayList<String>()
+
+        for (i in 1..100){
+            arrayList.add("https://placehold.it/400x400&text=image"+i)
+        }
+
+        EasyLoader
+            .imageBuilder()
+            .cacheLimit(100)
+            .asList()
+            .src(arrayList)
+            .container(recyclerView)
+            .build()
+            .show()
 
         EasyLoader
             .jsonBuilder()
             .src(SAMPLE_JSON_1)
-            .cacheLimit(1)
             .build()
             .load(object : DefaultDataHandler() {
                 override fun onSuccess(data: Any) {
@@ -62,7 +76,6 @@ class MainActivity : AppCompatActivity() {
         EasyLoader
             .jsonBuilder()
             .src(SAMPLE_JSON_2)
-            .cacheLimit(1)
             .build()
             .load(object : DefaultDataHandler() {
                 override fun onSuccess(data: Any) {

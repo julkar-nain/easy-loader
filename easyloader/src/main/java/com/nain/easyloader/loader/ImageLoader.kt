@@ -19,7 +19,9 @@ open class ImageLoader : BaseLoader() {
 
     open fun show() : CancellableTask {
         val activity: Activity = imageView.context as Activity
-        imageView.setImageDrawable(activity.getDrawable(placeHolder))
+        if(placeHolder != 0) {
+            imageView.setImageDrawable(activity.getDrawable(placeHolder))
+        }
 
         val bitmap: Bitmap? = MemoryCache.get(url) as Bitmap?
 

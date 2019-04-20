@@ -1,18 +1,18 @@
 package com.nain.easyloader.cache
 
-import kotlin.collections.HashMap
-
 /**
  * @author julkar nain
  * @since 4/18/19
  */
 internal object MemoryCache {
-    private var maxCacheSize = 0
-    private var cache : MutableMap<String, CacheItem> = HashMap()
+    // default cache value is 100
+    private var maxCacheSize = 100
+    private var cache = LinkedHashMap<String, CacheItem>()
 
     fun get(url: String): Any?{
         if(cache.containsKey(url)){
             val cacheItem = cache.get(url) as CacheItem
+            cacheItem.lastUsed = System.currentTimeMillis()
             return cacheItem.item
         }else{
             return null

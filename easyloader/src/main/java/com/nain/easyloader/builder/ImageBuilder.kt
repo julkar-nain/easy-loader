@@ -22,4 +22,8 @@ open class ImageBuilder : BaseBuilder<ImageBuilder, ImageLoader>(ImageLoader()){
 
         return this
     }
+
+    open fun asList(): ImageListBuilder{
+        return ImageListBuilder()
+    }
 }
