@@ -3,6 +3,7 @@ package com.nain.easyloader.loader
 import com.nain.easyloader.cache.MemoryCache
 import com.nain.easyloader.handler.DataHandler
 import com.nain.easyloader.handler.DefaultDataHandler
+import com.nain.easyloader.mapper.JsonMapper
 import com.nain.easyloader.task.CancellableTask
 import org.json.JSONArray
 import org.json.JSONObject
@@ -47,6 +48,34 @@ open class JsonLoader : BaseLoader() {
         }
 
         return this
+    }
+
+    open fun loadJSON(instance: Any, jsonObject: JSONObject, dataHandler: DataHandler): CancellableTask {
+        return loadJSON(object : DefaultDataHandler(){
+            override fun onSuccess(data: Any) {
+                super.onSuccess(data)
+                dataHandler.onSuccess(JsonMapper.map(instance, jsonObject))
+            }
+
+            override fun onFailure(error: Any) {
+                super.onFailure(error)
+                dataHandler.onFailure(error)
+            }
+        })
+    }
+
+    open fun loadJSON(list: MutableList<Any?>, instance: Any, jsonArray: JSONArray, dataHandler: DataHandler) :CancellableTask{
+        return loadJSON(object : DefaultDataHandler(){
+            override fun onSuccess(data: Any) {
+                super.onSuccess(data)
+                dataHandler.onSuccess(JsonMapper.map(list, instance, jsonArray))
+            }
+
+            override fun onFailure(error: Any) {
+                super.onFailure(error)
+                dataHandler.onFailure(error)
+            }
+        })
     }
 
     private fun sendJsonData(dataHandler: DataHandler, data: Any) {
