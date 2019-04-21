@@ -1,5 +1,6 @@
 package com.nain.easyloader
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -19,23 +20,32 @@ class MainActivity : AppCompatActivity() {
 
         EasyLoader
             .imageBuilder()
-            .src(SAMPLE_IMAGE_1)
+            .src(SAMPLE_IMAGE_2)
             .placeholder(R.drawable.placeholder)
             .container(imageViewUpper)
             .build()
             .show()
 
-        val cancellableTask: CancellableTask = EasyLoader
-            .imageBuilder()
-            .src(SAMPLE_IMAGE_2)
-            .placeholder(R.drawable.placeholder)
-            .container(imageViewLower)
-            .build()
-            .show()
-
-        cancellableTask.cancelTask()
-
+//        val cancellableTask: CancellableTask = EasyLoader
+//            .imageBuilder()
+//            .src(SAMPLE_IMAGE_2)
+//            .placeholder(R.drawable.placeholder)
+//            .container(imageViewLower)
+//            .build()
+//            .show()
+//
+//        cancellableTask.cancelTask()
         //cancellableTask.cancelTask() can be called in any time for cancel the loading
+
+
+        imageViewLower.setImageDrawable(getDrawable(R.drawable.placeholder))
+
+        EasyLoader.imageBuilder().src(SAMPLE_IMAGE_1).build().loadBitmap(object : DefaultDataHandler(){
+            override fun onSuccess(data: Any) {
+                super.onSuccess(data)
+                runOnUiThread({imageViewLower.setImageBitmap(data as Bitmap)})
+            }
+        })
 
         val arrayList = ArrayList<String>()
 
@@ -47,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             .imageBuilder()
             .cacheLimit(100)
             .asList()
-            .src(arrayList)
+            .src(SAMPLE_IMAGES)
             .container(recyclerView)
             .build()
             .show()
@@ -56,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             .jsonBuilder()
             .src(SAMPLE_JSON_1)
             .build()
-            .load(object : DefaultDataHandler() {
+            .loadJSON(object : DefaultDataHandler() {
                 override fun onSuccess(data: Any) {
                     super.onSuccess(data)
                     try {
@@ -77,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             .jsonBuilder()
             .src(SAMPLE_JSON_2)
             .build()
-            .load(object : DefaultDataHandler() {
+            .loadJSON(object : DefaultDataHandler() {
                 override fun onSuccess(data: Any) {
                     super.onSuccess(data)
                     try {

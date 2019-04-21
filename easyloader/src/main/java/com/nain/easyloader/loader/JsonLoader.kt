@@ -13,7 +13,7 @@ import java.io.InputStream
 
 open class JsonLoader : BaseLoader() {
 
-    open fun load(dataHandler: DataHandler) : CancellableTask {
+    open fun loadJSON(dataHandler: DataHandler) : CancellableTask {
 
         val jsonData: Any? = MemoryCache.get(url)
 

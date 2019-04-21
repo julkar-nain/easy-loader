@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.widget.ImageView
 import com.nain.easyloader.cache.MemoryCache
+import com.nain.easyloader.handler.DataHandler
 import com.nain.easyloader.handler.DefaultDataHandler
 import com.nain.easyloader.task.CancellableTask
 import java.io.InputStream
@@ -34,6 +35,30 @@ open class ImageLoader : BaseLoader() {
                     val imageData: Bitmap = BitmapFactory.decodeStream(data as InputStream)
                     MemoryCache.set(url, imageData)
                     activity.runOnUiThread({ imageView.setImageBitmap(imageData) })
+                }
+            })
+        }
+
+        return this
+    }
+
+    open fun loadBitmap(dataHandler: DataHandler): CancellableTask{
+        val bitmap: Bitmap? = MemoryCache.get(url) as Bitmap?
+
+        if (bitmap != null) {
+           dataHandler.onSuccess(bitmap)
+        } else {
+            download(object : DefaultDataHandler() {
+                override fun onSuccess(data: Any) {
+                    super.onSuccess(data)
+                    val imageData: Bitmap? = BitmapFactory.decodeStream(data as InputStream)
+                    MemoryCache.set(url, imageData as Bitmap)
+                    dataHandler.onSuccess(imageData)
+                }
+
+                override fun onFailure(error: Any) {
+                    super.onFailure(error)
+                    dataHandler.onFailure(error)
                 }
             })
         }
